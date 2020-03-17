@@ -284,12 +284,12 @@ let _config = {
 			}
 		}
 		_uncache(timeline);
-		//if the timeline has already ended but the inserted tween/timeline extends the duration, we should enable this timeline again so that it renders properly. We should also align the playhead with the parent timeline's when appropriate.
+		//如果时间轴已经结束，但是插入的补间/时间轴延长了持续时间，则再次启用此时间轴，以使其正确呈现。 在适当的时候，我们还应将播放头与父时间轴对齐。
 		if (timeline._dp && timeline._time >= timeline._dur && timeline._ts && timeline._dur < timeline.duration()) {
 			//in case any of the ancestors had completed but should now be enabled...
 			let tl = timeline;
 			while (tl._dp) {
-				tl.totalTime(tl._tTime, true); //moves the timeline (shifts its startTime) if necessary, and also enables it.
+				tl.totalTime(tl._tTime, true); //必要时移动时间轴（移动其startTime），并启用它。
 				tl = tl._dp;
 			}
 		}
@@ -312,7 +312,7 @@ let _config = {
 			repeatDelay = tween._rDelay,
 			tTime = 0,
 			pt, iteration, prevIteration;
-		if (repeatDelay && tween._repeat) { //in case there's a zero-duration tween that has a repeat with a repeatDelay
+		if (repeatDelay && tween._repeat) { //如果存在一个零时补间，其中包含带有repeatDelay的重复
 			tTime = _clamp(0, tween._tDur, totalTime);
 			iteration = _animationCycle(tTime, repeatDelay);
 			prevIteration = _animationCycle(tween._tTime, repeatDelay);
@@ -323,11 +323,13 @@ let _config = {
 				}
 			}
 		}
-		if (!tween._initted && _attemptInitTween(tween, totalTime, force, suppressEvents)) { //if we render the very beginning (time == 0) of a fromTo(), we must force the render (normal tweens wouldn't need to render at a time of 0 when the prevTime was also 0). This is also mandatory to make sure overwriting kicks in immediately.
+		if (!tween._initted && _attemptInitTween(tween, totalTime, force, suppressEvents)) { //如果我们渲染fromTo（）的开始（时间== 0），则必须强制渲染（当prevTime也为0时，正常补间动画不需要在0时渲染）。 这也是必须执行的操作，以确保立即启动覆盖。
 			return;
 		}
 		if (ratio !== prevRatio || force || tween._zTime === _tinyNum || (!totalTime && tween._zTime)) {
-			tween._zTime = totalTime || (suppressEvents ? _tinyNum : 0); //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect.
+			tween._zTime = totalTime || (suppressEvents ? _tinyNum : 0); /* 
+			672/5000
+			当播放头到达零时间补间的确切时间0（在顶部）时，我们需要辨别是否抑制了事件，以便当播放头再次移动（下一次）时，它将触发回调。 如果未抑制事件，则显然在此渲染中将触发回调。 基本上，回调应该在播放头到达或离开此确切位置时触发，而不是同时触发。 想象做一个timeline.seek（0），并且有一个位于0的回调。由于默认情况下该seek（）上的事件被抑制，因此不会触发任何事件，但是当播放头移出该位置时，该回调应该触发。 人们的直觉是这种行为。 */
 			tween.ratio = ratio;
 			if (tween._from) {
 				ratio = 1 - ratio;
