@@ -277,7 +277,7 @@ let _config = {
 		_addLinkedListItem(timeline, child, "_first", "_last", timeline._sort ? "_start" : 0);
 		timeline._recent = child;
 
-		if (child._time || (!child._dur && child._initted)) { //in case, for example, the _start is moved on a tween that has already rendered. Imagine it's at its end state, then the startTime is moved WAY later (after the end of this timeline), it should render at its beginning.
+		if (child._time || (!child._dur && child._initted)) { // 例如，如果开始在已渲染的中间层上移动。假设它处于结束状态，然后startTime被移到后面（在这个时间轴结束之后），它应该在开始时呈现。
 			let curTime = (timeline.rawTime() - child._start) * child._ts;
 			if (!child._dur || _clamp(0, child.totalDuration(), curTime) - child._tTime > _tinyNum) {
 				child.render(curTime, true);
