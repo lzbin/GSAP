@@ -91,7 +91,8 @@ let _config = {
 		for (; toSearch.indexOf(toFind[i]) < 0 && ++i < l;) { }
 		return (i < l);
 	},
-	_parseVars = (params, type, parent) => { //reads the arguments passed to one of the key methods and figures out if the user is defining things with the OLD/legacy syntax where the duration is the 2nd parameter, and then it adjusts things accordingly and spits back the corrected vars object (with the duration added if necessary, as well as runBackwards or startAt or immediateRender). type 0 = to()/staggerTo(), 1 = from()/staggerFrom(), 2 = fromTo()/staggerFromTo()
+	_parseVars = (params, type, parent) => { 
+		/* 读取传递给一个关键方法的参数，并判断用户是否使用旧/旧语法（duration是第二个参数）定义内容，然后相应地调整内容并返回已更正的vars对象（必要时添加duration，以及runbackward、startAt或immediator）。类型0=to（）/staggeto（），1=from（）/staggefrom（），2=fromTo（）/staggefromto（） */
 		let isLegacy = _isNumber(params[1]),
 			varsIndex = (isLegacy ? 2 : 1) + (type < 2 ? 0 : 1),
 			vars = params[varsIndex],
@@ -866,7 +867,7 @@ let _config = {
 			tick() {
 				_tick(true);
 			},
-			wake() {
+			wake() { // 唤醒执行定时器
 				if (_coreReady) {
 					if (!_coreInitted && _windowExists()) {
 						_win = _coreInitted = window;
@@ -882,7 +883,7 @@ let _config = {
 					_tick(2);
 				}
 			},
-			sleep() {
+			sleep() { // 
 				(_raf ? _win.cancelAnimationFrame : clearTimeout)(_id);
 				_tickerActive = 0;
 				_req = _emptyFunc;
