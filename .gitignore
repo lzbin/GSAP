@@ -2,7 +2,8 @@
 .AppleDouble
 .LSOverride
 Icon
-
+.awcache
+node_modules
 # Thumbnails
 ._*
 

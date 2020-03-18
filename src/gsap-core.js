@@ -2245,7 +2245,7 @@ export class Tween extends Animation {
 			parsedTargets = _isArray(targets) && _isNumber(targets[0]) ? [targets] : toArray(targets),
 			tl, i, copy, l, p, curTarget, staggerFunc, staggerVarsToMerge;
 		this._targets = parsedTargets.length ? _harness(parsedTargets) : _warn("GSAP target " + targets + " not found. https://greensock.com", !_config.nullTargetWarn) || [];
-		this._ptLookup = []; //PropTween lookup. An array containing an object for each target, having keys for each tweening property
+		this._ptLookup = []; // PropTween查找。包含每个目标的对象的数组，每个tweening属性都有键
 		this._overwrite = overwrite;
 		if (keyframes || stagger || _isFuncOrString(duration) || _isFuncOrString(delay)) {
 			vars = this.vars;
@@ -2299,7 +2299,7 @@ export class Tween extends Animation {
 			duration || this.duration((duration = tl.duration()));
 
 		} else {
-			this.timeline = 0; //speed optimization, faster lookups (no going up the prototype chain)
+			this.timeline = 0; //速度优化，更快的查找（不进入原型链）
 		}
 
 		if (overwrite === true) {
@@ -2307,10 +2307,10 @@ export class Tween extends Animation {
 			_globalTimeline.killTweensOf(parsedTargets);
 			_overwritingTween = 0;
 		}
-
+		// immediaterder:true以强制它在实例化时立即呈现
 		if (immediateRender || (!duration && !keyframes && this._start === this.parent._time  && _isNotFalse(immediateRender) && _hasNoPausedAncestors(this) && this.parent.data !== "nested")) {
-			this._tTime = -_tinyNum; //forces a render without having to set the render() "force" parameter to true because we want to allow lazying by default (using the "force" parameter always forces an immediate full render)
-			this.render(Math.max(0, -delay)); //in case delay is negative
+			this._tTime = -_tinyNum; //强制渲染，而不必将render（）“force”参数设置为true，因为我们希望在默认情况下允许懒惰（使用“force”参数总是强制立即完全渲染）
+			this.render(Math.max(0, -delay)); //如果延迟为负
 		}
 	}
 
