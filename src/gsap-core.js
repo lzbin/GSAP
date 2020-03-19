@@ -834,7 +834,7 @@ let _config = {
 	_ticker = (function() {
 		let _getTime = Date.now,
 			_lagThreshold = 500,
-			_adjustedLag = 33,
+			_adjustedLag = 33, // 滞后
 			_startTime = _getTime(),
 			_lastUpdate = _startTime,
 			_gap = 1 / 60,
@@ -1230,7 +1230,7 @@ export class Animation {
 			if (value) {
 				this._pauseTS = this._ts;
 				this._pTime = this._tTime ||  Math.max(-this._delay, this.rawTime()); // if the pause occurs during the delay phase, make sure that's factored in when resuming.
-				this._ts = this._act = 0; //we use a timeScale of 0 to indicate a paused state, but we record the old "real" timeScale as _pauseTS so we can revert when unpaused.
+				this._ts = this._act = 0; //我们使用时间刻度0来表示暂停状态，但我们将旧的“实际”时间刻度记录为暂停，以便在未暂停时还原。
 			} else {
 				this._ts = this._pauseTS || 1;
 				this._pauseTS = null;

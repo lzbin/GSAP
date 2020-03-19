@@ -14,8 +14,10 @@ runTween();
 
 function runTimeline() {
     var tl = gsap.timeline();
-    // tl.to('.app-container', {background: '#000',height: 600});
-
+    tl.to('.app-container', {background: '#060',height: 600});
 }
 
-// runTimeline();
+// setTimeout(() => {
+//     gsap.to('.app-container', {background: '#030',height: 600});
+// }, 3000);
+runTimeline();
