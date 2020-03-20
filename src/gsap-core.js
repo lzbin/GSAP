@@ -836,8 +836,8 @@ let _config = {
 			_lagThreshold = 500,
 			_adjustedLag = 33, // 滞后
 			_startTime = _getTime(),
-			_lastUpdate = _startTime,
-			_gap = 1 / 60,
+			_lastUpdate = _startTime,  
+			_gap = 1 / 60,  // 每一帧的时间
 			_nextTime = _gap,
 			_listeners = [],
 			_id, _req, _raf, _self,
@@ -2351,14 +2351,14 @@ export class Tween extends Animation {
 					//timeline && this._yEase && _propagateYoyoEase(timeline, isYoyo);
 					//repeatRefresh functionality
 					if (this.vars.repeatRefresh && !this._lock) {
-						this._lock = force = 1; //force, otherwise if lazy is true, the _attemptInitTween() will return and we'll jump out and get caught bouncing on each tick.
+						this._lock = force = 1; //force，否则如果lazy为true，则_attemptinttween（）将返回，并且我们将跳出并在每个滴答声上被捕捉到反弹。
 						this.render(cycleDuration * iteration, true).invalidate()._lock = 0;
 					}
 				}
 			}
 
 			if (!this._initted && _attemptInitTween(this, time, force, suppressEvents)) {
-				this._tTime = 0; // in constructor if immediateRender is true, we set _tTime to -_tinyNum to have the playhead cross the starting point but we can't leave _tTime as a negative number.
+				this._tTime = 0; // 在构造器中，如果immediator为true，我们将tTime设置为 -_tinyNum，使playhead越过起点，但不能将tTime保留为负数。
 				return this;
 			}
 
@@ -2366,7 +2366,7 @@ export class Tween extends Animation {
 			this._time = time;
 
 			if (!this._act && this._ts) {
-				this._act = 1; //as long as it's not paused, force it to be active so that if the user renders independent of the parent timeline, it'll be forced to re-render on the next tick.
+				this._act = 1; // 只要它没有暂停，就强制它处于活动状态，以便如果用户独立于父时间线进行渲染，它将在下一个勾号上被迫重新渲染。
 				this._lazy = 0;
 			}
 
@@ -2389,7 +2389,7 @@ export class Tween extends Animation {
 
 			if (this._onUpdate && !suppressEvents) {
 				if (totalTime < 0 && this._startAt) {
-					this._startAt.render(totalTime, true, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
+					this._startAt.render(totalTime, true, force); //note: 
 				}
 				_callback(this, "onUpdate");
 			}
@@ -2401,7 +2401,7 @@ export class Tween extends Animation {
 				if (totalTime < 0 && this._startAt && !this._onUpdate) {
 					this._startAt.render(totalTime, true, force);
 				}
-				(totalTime || !dur) && ((tTime && this._ts > 0) || (!tTime && this._ts < 0)) && _removeFromParent(this, 1); // don't remove if we're rendering at exactly a time of 0, as there could be autoRevert values that should get set on the next tick (if the playhead goes backward beyond the startTime, negative totalTime). Don't remove if the timeline is reversed and the playhead isn't at 0, otherwise tl.progress(1).reverse() won't work. Only remove if the playhead is at the end and timeScale is positive, or if the playhead is at 0 and the timeScale is negative.
+				(totalTime || !dur) && ((tTime && this._ts > 0) || (!tTime && this._ts < 0)) && _removeFromParent(this, 1); // 
 				if (!suppressEvents && !(totalTime < 0 && !prevTime)) {
 					_callback(this, (tTime === tDur ? "onComplete" : "onReverseComplete"), true);
 					this._prom && this._prom();
@@ -2702,6 +2702,8 @@ const _gsap = {
 	timeline(vars) {
 		return new Timeline(vars);
 	},
+	...
+}
 	getTweensOf(targets, onlyActive) {
 		return _globalTimeline.getTweensOf(targets, onlyActive);
 	},

@@ -10,11 +10,15 @@ function runTween() {
     gsap.to('.app-container', {background: '#000',height: 600});
 }
 
-runTween();
+// runTween();
 
 function runTimeline() {
+
+    // 新建时间轴
     var tl = gsap.timeline();
     tl.to('.app-container', {background: '#060',height: 600});
+
+    
 }
 
 // setTimeout(() => {
