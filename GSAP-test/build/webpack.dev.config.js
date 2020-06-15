@@ -9,6 +9,7 @@ module.exports = merge(baseWebpackConfig, {
     devServer: {
         // 指定静态内容的位置，避免图片等找不到资源
         disableHostCheck: true,
+        host: '0.0.0.0',
         contentBase: path.join(__dirname, '../src/'),
         port: 8083
     },
