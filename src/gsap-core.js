@@ -676,7 +676,7 @@ _createPlugin = config => {
 
 /*
 * --------------------------------------------------------------------------------------
-* COLORS 颜色相关变量及方法
+* COLORS
 * --------------------------------------------------------------------------------------
 */
 
@@ -824,7 +824,7 @@ _colorStringFilter = a => {
 
 /*
 * --------------------------------------------------------------------------------------
-* TICKER 计时器
+* TICKER
 * --------------------------------------------------------------------------------------
 */
 _tickerActive,
@@ -1115,7 +1115,7 @@ constructor(vars, time) {
 		_ticker.wake();
 	}
 	if (parent) {
-		_addToTimeline(parent, this, (time || time === 0) ? time : parent._time);
+		 (parent, this, (time || time === 0) ? time : parent._time);
 	}
 	if (vars.reversed) {
 		this.reversed(true);
